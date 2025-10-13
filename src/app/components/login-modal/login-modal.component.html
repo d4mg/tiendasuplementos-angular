@@ -1,0 +1,63 @@
+<!-- Modal flotante -->
+<div class="modal-overlay" *ngIf="showAuthModal">
+  <div class="modal">
+    <!-- Título dinámico -->
+    <h2>{{ isRegisterMode ? 'Crear Cuenta' : 'Iniciar Sesión' }}</h2>
+
+    <!-- Formulario -->
+    <form #authForm="ngForm" (ngSubmit)="onSubmit()">
+
+      <!-- Campo Email -->
+      <div class="form-group">
+        <input type="email"
+               name="email"
+               placeholder="Correo electrónico"
+               [(ngModel)]="authData.email"
+               required
+               email
+               #email="ngModel">
+
+        <!-- Validaciones Email -->
+        <div class="error" *ngIf="email.invalid && email.touched">
+          <small *ngIf="email.errors?.['required']">El correo es obligatorio.</small>
+          <small *ngIf="email.errors?.['email']">Formato de correo inválido.</small>
+        </div>
+      </div>
+
+      <!-- Campo Contraseña -->
+      <div class="form-group">
+        <input type="password"
+               name="password"
+               placeholder="Contraseña"
+               [(ngModel)]="authData.password"
+               required
+               minlength="6"
+               #password="ngModel">
+
+        <!-- Validaciones Contraseña -->
+        <div class="error" *ngIf="password.invalid && password.touched">
+          <small *ngIf="password.errors?.['required']">La contraseña es obligatoria.</small>
+          <small *ngIf="password.errors?.['minlength']">Debe tener al menos 6 caracteres.</small>
+        </div>
+      </div>
+
+      <!-- Botón principal -->
+      <button type="submit"
+              class="btn-primary"
+              [disabled]="authForm.invalid">
+        {{ isRegisterMode ? 'Registrarme' : 'Iniciar Sesión' }}
+      </button>
+    </form>
+
+    <!-- Link para cambiar entre login/registro -->
+    <p>
+      <a href="#" (click)="toggleMode($event)">
+        {{ isRegisterMode ? '¿Ya tienes cuenta? Inicia sesión' : '¿No tienes cuenta? Regístrate' }}
+      </a>
+    </p>
+
+    <!-- Botón cerrar -->
+    <button class="btn-close" (click)="closeAuthModal()">X</button>
+  </div>
+</div>
+

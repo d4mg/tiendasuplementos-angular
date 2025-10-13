@@ -1,0 +1,37 @@
+/* Ajustar el contenido general del navbar */
+nav {
+  padding: 0 40px;
+}
+
+/* Submenú oculto por defecto */
+nav .dropdown-menu {
+  display: none !important;      /* 🔑 arranca oculto */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  background: rgba(0,0,0,0.7) !important;
+  border-radius: 10px;
+  margin-top: 8px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Mostrar el menú cuando el mouse está sobre el li.dropdown */
+nav .dropdown:hover .dropdown-menu {
+  display: block !important;     /* 🔑 ahora sí aparece */
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Items */
+nav .dropdown-item {
+  color: white !important;
+  padding: 12px 20px;
+  transition: background 0.3s;
+}
+
+nav .dropdown-item:hover {
+  background: rgba(255,255,255,0.1) !important;
+}

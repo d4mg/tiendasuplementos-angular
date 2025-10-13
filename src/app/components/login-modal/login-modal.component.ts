@@ -1,0 +1,59 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { ModalService } from '../../services/modal.service';
+
+@Component({
+  selector: 'app-login-modal',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './login-modal.component.html',
+  styleUrls: ['./login-modal.component.css'],
+})
+export class LoginModalComponent {
+  showAuthModal = false;
+  isRegisterMode = false;
+
+  authData = {
+    email: '',
+    password: ''
+  };
+
+  constructor(
+    private authService: AuthService,
+    private modalService: ModalService
+  ) {
+    // Escuchar cambios desde el servicio
+    this.modalService.authModalVisible$.subscribe((visible: boolean) => {
+      this.showAuthModal = visible;
+    });
+  }
+
+  toggleMode(event: Event) {
+    event.preventDefault();
+    this.isRegisterMode = !this.isRegisterMode;
+  }
+
+  closeAuthModal() {
+    this.modalService.closeAuthModal();
+  }
+
+  onSubmit() {
+    const { email, password } = this.authData;
+
+    if (this.isRegisterMode) {
+      // Simulación de registro
+      this.authService.login(email);
+      alert('Cuenta creada correctamente ✅');
+    } else {
+      // Simulación de login
+      const success = this.authService.login(email);
+      if (success) {
+        this.closeAuthModal(); // ✅ Cierra el modal al iniciar sesión
+      } else {
+        alert('Error al iniciar sesión ❌');
+      }
+    }
+  }
+}

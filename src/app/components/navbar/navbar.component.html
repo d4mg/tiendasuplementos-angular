@@ -1,0 +1,52 @@
+<nav class="navbar">
+  <div class="container">
+    <div class="logo">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        SuplementosPro
+      </a>
+    </div>
+
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          Inicio
+        </a>
+      </li>
+
+      <li class="dropdown" [class.show]="isDropdownOpen" (mouseleave)="isDropdownOpen=false">
+        <a class="nav-link dropdown-toggle"
+           routerLink="/productos"
+           routerLinkActive="active"
+           (click)="toggleDropdown($event)">
+          Productos
+        </a>
+
+        <ul class="dropdown-menu" [class.show]="isDropdownOpen">
+          <li><a routerLink="/productos/proteinas" routerLinkActive="active" (click)="closeDropdown()">Proteínas</a></li>
+          <li><a routerLink="/productos/aminoacidos" routerLinkActive="active" (click)="closeDropdown()">Aminoácidos</a></li>
+          <li><a routerLink="/productos/creatinas" routerLinkActive="active" (click)="closeDropdown()">Creatinas</a></li>
+          <li><a routerLink="/productos/otros" routerLinkActive="active" (click)="closeDropdown()">Otros</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a routerLink="/contacto" routerLinkActive="active">Contacto</a>
+      </li>
+
+      <!--  Zona de usuario -->
+      <li class="user-section" *ngIf="isLoggedIn; else guestLinks">
+        <span class="user-icon">👤</span>
+        <span class="user-email">{{ userEmail }}</span>
+        <button class="btn-logout" (click)="logout()">Cerrar sesión</button>
+      </li>
+
+      <!--  Enlace si no hay sesión -->
+      <ng-template #guestLinks>
+        <li>
+         <!-- Si el usuario NO está logueado -->
+            <button class="btn-login" *ngIf="!isLoggedIn" (click)="openAuthModal()">Iniciar sesión</button>
+        </li>
+      </ng-template>
+    </ul>
+  </div>
+</nav>
