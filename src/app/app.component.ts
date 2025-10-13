@@ -3,10 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
+import { CarritoComponent } from "./components/carrito/carrito.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, FooterComponent, LoginModalComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, LoginModalComponent, CarritoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

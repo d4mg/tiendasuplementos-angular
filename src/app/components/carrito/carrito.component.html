@@ -1,0 +1,40 @@
+<!-- Panel del carrito -->
+<div class="carrito-panel" [class.abierto]="mostrarCarrito">
+  <div class="carrito-header">
+    <span>🛍️ Tu Carrito</span>
+    <button (click)="cerrarCarrito()">✖</button>
+  </div>
+
+  <div *ngFor="let p of productos">
+    <div class="producto-item">
+      <img [src]="p.imagen" [alt]="p.nombre">
+      <span>{{ p.nombre }}</span>
+      <span>${{ p.precio | number:'1.0-0' }}</span>
+      <button class="btn-eliminar" (click)="eliminar(p.id)">🗑️</button>
+    </div>
+  </div>
+
+  <div *ngIf="productos.length === 0" class="text-center mt-3">
+    <p>Tu carrito está vacío 🛒</p>
+  </div>
+
+  <div class="carrito-total">
+    Total: ${{ total | number:'1.0-0' }}
+  </div>
+
+  <button *ngIf="productos.length > 0" class="btn-vaciar" (click)="vaciar()">Vaciar carrito</button>
+</div>
+
+<!-- Ícono flotante -->
+<div class="carrito-icono" (click)="toggleCarrito()">
+  🛒
+</div>
+
+<!-- Icono flotante del carrito -->
+<div class="carrito-flotante" (click)="toggleCarrito()">
+  <i class="fas fa-shopping-cart"></i>
+
+  <!-- Contador dinámico -->
+  <span class="contador" *ngIf="cantidadTotal > 0">{{ cantidadTotal }}</span>
+</div>
+

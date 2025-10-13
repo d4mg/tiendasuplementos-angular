@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Producto } from '../../../models/producto.interface';
 import { DecimalPipe, NgFor } from '@angular/common';
+import { CarritoService } from '../../../services/carrito.service';
 
 @Component({
   selector: 'app-creatinas',
@@ -53,4 +54,10 @@ export class CreatinasComponent {
           imagen: '/assets/img/proteina2.png'
         },
       ];
+
+       constructor(private carritoService: CarritoService) {}
+
+            agregarAlCarrito(producto: Producto) {
+              this.carritoService.agregarProducto(producto);
+            }
 }

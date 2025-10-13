@@ -2,10 +2,10 @@
   <div class="card" *ngFor="let producto of productos">
     <img [src]="producto.imagen" [alt]="producto.nombre">
     <div class="card-content">
-      <h3>{{ producto.nombre }}</h3>
-      <p>{{ producto.descripcion }}</p>
-      <span class="precio">${{ producto.precio | number }}</span>
-      <button class="btn-comprar">Comprar</button>
+    <h3>{{ producto.nombre }}</h3>
+    <p>{{ producto.descripcion }}</p>
+    <p class="precio">${{ producto.precio | number:'1.0-0' }}</p>
+    <button (click)="agregarAlCarrito(producto)" class="btn-comprar">Comprar</button>
     </div>
   </div>
 </div>
