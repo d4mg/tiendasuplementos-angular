@@ -1,1 +1,19 @@
-<p>productos works!</p>,
+<section class="productos-container">
+  <h1 class="titulo">Productos Destacados</h1>
+
+  <div class="carousel" #carousel>
+    <div class="carousel-item" *ngFor="let producto of productosDestacados">
+      <img [src]="producto.imagen" [alt]="producto.nombre" />
+      <h3>{{ producto.nombre }}</h3>
+      <p>{{ producto.descripcion }}</p>
+    </div>
+  </div>
+
+  <h2 class="titulo-categorias">Categorías</h2>
+  <div class="categorias">
+    <button routerLink="/productos/proteinas">Proteínas</button>
+    <button routerLink="/productos/aminoacidos">Aminoácidos</button>
+    <button routerLink="/productos/creatinas">Creatinas</button>
+    <button routerLink="/productos/otros">Otros suplementos</button>
+  </div>
+</section>

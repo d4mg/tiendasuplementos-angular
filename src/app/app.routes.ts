@@ -5,9 +5,11 @@ import { AminoacidosComponent } from './pages/productos/aminoacidos/aminoacidos.
 import { CreatinasComponent } from './pages/productos/creatinas/creatinas.component';
 import { OtrosComponent } from './pages/productos/otros/otros.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { ProductosComponent } from './pages/productos/productos.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'productos', component: ProductosComponent },
   { path: 'productos/proteinas', component: ProteinasComponent },
   { path: 'productos/aminoacidos', component: AminoacidosComponent },
   { path: 'productos/creatinas', component: CreatinasComponent },

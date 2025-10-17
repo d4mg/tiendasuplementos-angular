@@ -64,31 +64,6 @@ button {
   font-size: 1.1rem;
 }
 
-.carrito-icono {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  background-color: #f30000;
-  color: white;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 26px;
-  cursor: pointer;
-  z-index: 2100;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s;
-}
-
-.carrito-icono:hover {
-  transform: scale(1.1);
-  background-color: #d01501;
-  z-index: 9999;
-}
-
 .carrito-flotante {
   position: fixed;
   bottom: 30px;
@@ -105,6 +80,7 @@ button {
 
 .carrito-flotante:hover {
   transform: scale(1.1);
+  color: rgb(144, 0, 0);
   z-index: 9999;
 }
 

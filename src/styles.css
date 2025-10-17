@@ -1,3 +1,9 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* Ajustar el contenido general del navbar */
 nav {
   padding: 0 40px;
@@ -34,4 +40,8 @@ nav .dropdown-item {
 
 nav .dropdown-item:hover {
   background: rgba(255,255,255,0.1) !important;
+}
+
+.carousel {
+  overflow-x: auto !important;
 }
