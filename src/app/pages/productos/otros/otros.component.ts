@@ -13,51 +13,51 @@ export class OtrosComponent {
   productos: Producto[] = [
       {
         id: 1,
-        nombre: 'Barra de Proteína',
-        descripcion: 'Proteína de suero de leche ideal para recuperación muscular.',
-        precio: 120000,
-        imagen: '/assets/img/proteina1.png'
+        nombre: 'Smart Bar Smart Nutrition',
+        descripcion: 'Deliciosa barra proteica con 21g de proteína, ideal para mantener y desarrollar masa muscular.',
+        precio: 8500,
+        imagen: '/assets/img/o2.png'
       },
       {
         id: 2,
-        nombre: 'Omega 3',
-        descripcion: 'Proteína a base de plantas, perfecta para dietas veganas.',
-        precio: 95000,
-        imagen: '/assets/img/proteina2.png'
+        nombre: 'Triple Omega 3-6-9 Healthy America',
+        descripcion: 'Potencia tu bienestar con el Triple Omega 3-6-9 Healthy America, contiene 1.200 mg de ácidos grasos esenciales para la salud cardiovascular y cognitiva.',
+        precio: 96000,
+        imagen: '/assets/img/o1.png'
       },
       {
         id: 3,
-        nombre: 'Multivitamínico',
-        descripcion: 'Proteína a base de plantas, perfecta para dietas veganas.',
-        precio: 95000,
-        imagen: '/assets/img/proteina2.png'
+        nombre: 'Multivitamínico The One Proscience',
+        descripcion: 'Un solo producto te aporta más de 20 vitaminas y minerales esenciales. Con antioxidantes, sin azúcares añadidos y fácil de preparar para una salud óptima.',
+        precio: 90000,
+        imagen: '/assets/img/o5.png'
       },
       {
         id: 4,
-        nombre: 'Pre-Enteno',
-        descripcion: 'Proteína a base de plantas, perfecta para dietas veganas.',
-        precio: 95000,
-        imagen: '/assets/img/proteina2.png'
+        nombre: 'Intenze Proscience',
+        descripcion: 'Pre-entrenamiento diseñado para maximizar tu energía, enfoque y resistencia durante los entrenamientos más intensos.',
+        precio: 145000,
+        imagen: '/assets/img/o4.png'
       },
       {
         id: 5,
-        nombre: 'Quemador de Grasa',
-        descripcion: 'Proteína a base de plantas, perfecta para dietas veganas.',
-        precio: 95000,
-        imagen: '/assets/img/proteina2.png'
+        nombre: 'L-Carnitine Plus Spartan',
+        descripcion: 'Suplemento que ayuda a convertir la grasa en energía, ideal para mejorar el rendimiento físico y apoyar la pérdida de peso.',
+        precio: 65000,
+        imagen: '/assets/img/o3.png'
       },
       {
         id: 6,
-        nombre: 'Shaker de Proteína',
-        descripcion: 'Proteína a base de plantas, perfecta para dietas veganas.',
-        precio: 95000,
-        imagen: '/assets/img/proteina2.png'
+        nombre: 'Shaker + Sobres Pase Fitmafia',
+        descripcion: 'Shaker util para preparar tus batidos de proteina + 5 sobres pase fitmafia.',
+        precio: 60000,
+        imagen: '/assets/img/o6.png'
       },
     ];
 
      constructor(private carritoService: CarritoService) {}
 
-          agregarAlCarrito(producto: Producto) {
-            this.carritoService.agregarProducto(producto);
-          }
+         agregarAlCarrito(producto: any) {
+         this.carritoService.agregarProducto(producto);
+        }
  }

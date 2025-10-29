@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Producto } from '../models/producto.interface'; // ✅ solo importado, no definido aquí
+import { BehaviorSubject, Observable } from 'rxjs';
+
+export interface Producto {
+  id: number;
+  nombre: string;
+  precio: number;
+  imagen: string;
+  cantidad: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -8,46 +15,95 @@ import { Producto } from '../models/producto.interface'; // ✅ solo importado, 
 export class CarritoService {
   private carrito: Producto[] = [];
   private carritoSubject = new BehaviorSubject<Producto[]>([]);
-  carrito$ = this.carritoSubject.asObservable();
+  public carrito$: Observable<Producto[]> = this.carritoSubject.asObservable();
 
   constructor() {
+    this.cargarCarrito();
+  }
+
+  private cargarCarrito(): void {
     const carritoGuardado = localStorage.getItem('carrito');
     if (carritoGuardado) {
-      this.carrito = JSON.parse(carritoGuardado);
-      this.carritoSubject.next(this.carrito);
+      try {
+        this.carrito = JSON.parse(carritoGuardado);
+        this.actualizarCarrito();
+      } catch (error) {
+        console.error('Error al cargar el carrito:', error);
+        localStorage.removeItem('carrito');
+        this.carrito = [];
+        this.actualizarCarrito();
+      }
     }
   }
 
-  agregarProducto(producto: Producto) {
-    const existente = this.carrito.find(p => p.id === producto.id);
-    if (existente) {
-      existente.cantidad = (existente.cantidad || 0) + 1;
+  obtenerCarrito(): Producto[] {
+    return [...this.carrito];
+  }
+
+  agregarProducto(producto: Producto): void {
+    const productoExistente = this.carrito.find(p => p.id === producto.id);
+    
+    if (productoExistente) {
+      productoExistente.cantidad++;
     } else {
       this.carrito.push({ ...producto, cantidad: 1 });
     }
+    
     this.actualizarCarrito();
   }
 
-  eliminarProducto(id: number) {
+  eliminarProducto(id: number): void {
     this.carrito = this.carrito.filter(p => p.id !== id);
     this.actualizarCarrito();
   }
 
-  limpiarCarrito() {
+  vaciarCarrito(): void {
     this.carrito = [];
     this.actualizarCarrito();
   }
 
-  obtenerTotal(): number {
-    return this.carrito.reduce((total, p) => total + (p.precio * (p.cantidad || 0)), 0);
-  }
-
-  obtenerCantidad(): number {
-    return this.carrito.reduce((acc, p) => acc + (p.cantidad || 0), 0);
-  }
-
-  private actualizarCarrito() {
+  private actualizarCarrito(): void {
+    this.carritoSubject.next([...this.carrito]);
     localStorage.setItem('carrito', JSON.stringify(this.carrito));
-    this.carritoSubject.next(this.carrito);
+  }
+
+  obtenerTotal(): number {
+    return this.carrito.reduce((total, producto) => 
+      total + (producto.precio * producto.cantidad), 0);
+  }
+
+  obtenerCantidadTotal(): number {
+    return this.carrito.reduce((total, producto) => 
+      total + producto.cantidad, 0);
+  }
+
+  decrementarCantidad(id: number): void {
+    const productoIndex = this.carrito.findIndex(p => p.id === id);
+    if (productoIndex !== -1) {
+      if (this.carrito[productoIndex].cantidad > 1) {
+        this.carrito[productoIndex].cantidad--;
+      } else {
+        this.carrito.splice(productoIndex, 1);
+      }
+      this.actualizarCarrito();
+    }
+  }
+
+  incrementarCantidad(id: number): void {
+    const producto = this.carrito.find(p => p.id === id);
+    if (producto) {
+      producto.cantidad++;
+      this.actualizarCarrito();
+    }
+  }
+
+  completarCompra(): Promise<boolean> {
+    return new Promise((resolve) => {
+      // Simulamos un tiempo de procesamiento
+      setTimeout(() => {
+        this.vaciarCarrito();
+        resolve(true);
+      }, 1500);
+    });
   }
 }
