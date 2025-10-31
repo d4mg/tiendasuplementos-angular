@@ -33,6 +33,13 @@
         <a routerLink="/contacto" routerLinkActive="active">Contacto</a>
       </li>
 
+      <!-- Enlace al Panel de Administración -->
+      <li *ngIf="isAdmin">
+        <a routerLink="/admin" routerLinkActive="active" class="admin-link">
+          Panel Admin
+        </a>
+      </li>
+
       <!--  Zona de usuario -->
       <li class="user-section" *ngIf="isLoggedIn; else guestLinks">
         <span class="user-icon">👤</span>

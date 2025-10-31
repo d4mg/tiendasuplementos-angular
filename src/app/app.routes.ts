@@ -6,6 +6,8 @@ import { CreatinasComponent } from './pages/productos/creatinas/creatinas.compon
 import { OtrosComponent } from './pages/productos/otros/otros.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ProductosComponent } from './pages/productos/productos.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { AdminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +16,11 @@ export const routes: Routes = [
   { path: 'productos/aminoacidos', component: AminoacidosComponent },
   { path: 'productos/creatinas', component: CreatinasComponent },
   { path: 'productos/otros', component: OtrosComponent },
-  { path: 'contacto', component: ContactComponent},
+  { path: 'contacto', component: ContactComponent },
+  { 
+    path: 'admin', 
+    component: AdminPanelComponent,
+    canActivate: [AdminGuard]
+  },
   { path: '**', redirectTo: '' } // redirección en caso de ruta no encontrada
 ];

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CarritoService, Producto } from '../../services/carrito.service';
+import { CarritoService } from '../../services/carrito.service';
+import { ProductoCarrito } from '../../models/producto-carrito.interface';
 import { CurrencyPipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
@@ -10,7 +11,7 @@ import { CurrencyPipe, NgFor, NgIf } from '@angular/common';
   standalone: true
 })
 export class CarritoComponent implements OnInit {
-  productos: Producto[] = [];
+  productos: ProductoCarrito[] = [];
   total: number = 0;
   mostrarCarrito: boolean = false;
   cantidadTotal: number = 0;

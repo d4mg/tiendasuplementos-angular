@@ -16,42 +16,54 @@ export class CreatinasComponent {
           nombre: 'Creatine Monohydrate Healthy Sports',
           descripcion: 'Aumenta tu rendimiento con Creatine Monohydrate Healthy Sports. Mejora tu fuerza y recuperación con una creatina pura y efectiva para entrenamientos intensos.',
           precio: 125000,
-          imagen: '/assets/img/c1.png'
+          imagen: '/assets/img/c1.png',
+          categoria: 'creatinas',
+          stock: 25
         },
         {
           id: 2,
           nombre: 'Creatine Iron Smart Nutrition',
           descripcion: 'La ayuda ergogénica más efectiva para atletas o quienes practican su deporte favorito. Llévate una creatina con una fórmula pura y eficaz para un rendimiento óptimo.',
           precio: 130000,
-          imagen: '/assets/img/c2.png'
+          imagen: '/assets/img/c2.png',
+          categoria: 'creatinas',
+          stock: 15
         },
         {
           id: 3,
           nombre: 'Creatine Powder Micronized Optimum Nutrition',
           descripcion: 'creatina micronizada de alta calidad que mejora la absorción y eficacia. Ideal para aumentar la fuerza y resistencia durante tus entrenamientos.',
           precio: 170000,
-          imagen: '/assets/img/c3.png'
+          imagen: '/assets/img/c3.png',
+          categoria: 'creatinas',
+          stock: 20
         },
         {
           id: 4,
           nombre: 'Legacy Proscience',
           descripcion: 'Creatina HCL para mejorar fuerza, masa muscular y recuperación. Disponible en sabores deliciosos para optimizar tu rendimiento.',
           precio: 85000,
-          imagen: '/assets/img/c4.png'
+          imagen: '/assets/img/c4.png',
+          categoria: 'creatinas',
+          stock: 30
         },
         {
           id: 5,
           nombre: 'Crea Stack Megaplex',
           descripcion: 'Suplemento con creatina, HMB, ácido alfa lipoico y sulfato de vanadio. Mejora fuerza y recuperación. En presentación de 1,3 libras y sobres.',
           precio: 149990,
-          imagen: '/assets/img/c5.png'
+          imagen: '/assets/img/c5.png',
+          categoria: 'creatinas',
+          stock: 18
         },
         {
           id: 6,
           nombre: 'Legend Fitmafia',
           descripcion: 'La creatina en polvo con 12 g de energía y enfoque. Fórmula con Creapure®, ideal para mejorar tu rendimiento en entrenamientos intensos.',
           precio: 79900,
-          imagen: '/assets/img/c6.png'
+          imagen: '/assets/img/c6.png',
+          categoria: 'creatinas',
+          stock: 22
         },
       ];
 

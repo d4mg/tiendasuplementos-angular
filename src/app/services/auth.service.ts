@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ModalService } from './../services/modal.service'; // ✅ Importa tu servicio del modal
+import { ModalService } from './../services/modal.service';
+
+export interface User {
+  email: string;
+  isAdmin: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -9,29 +14,29 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
-  private userEmailSubject = new BehaviorSubject<string | null>(null);
-  public userEmail$: Observable<string | null> = this.userEmailSubject.asObservable();
+  private userSubject = new BehaviorSubject<User | null>(null);
+  public user$: Observable<User | null> = this.userSubject.asObservable();
 
-  constructor(private modalService: ModalService) { // ✅ Inyecta el modalService
-    const storedUser = localStorage.getItem('userEmail');
+  constructor(private modalService: ModalService) {
+    const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      this.userEmailSubject.next(storedUser);
+      const user = JSON.parse(storedUser);
+      this.userSubject.next(user);
       this.isLoggedInSubject.next(true);
     }
   }
 
-  restoreSession(email: string) {
-    this.userEmailSubject.next(email);
-    this.isLoggedInSubject.next(true);
-  }
+  login(email: string, password: string): boolean {
+    if (email && password) {
+      const isAdmin = email === 'admin1@gmail.com' && password === '123456';
+      const user: User = {
+        email,
+        isAdmin
+      };
 
-  login(email: string): boolean {
-    if (email) {
-      this.userEmailSubject.next(email);
-      localStorage.setItem('userEmail', email);
+      this.userSubject.next(user);
+      localStorage.setItem('user', JSON.stringify(user));
       this.isLoggedInSubject.next(true);
-
-      // 🚀 Cerrar el modal automáticamente al iniciar sesión
       this.modalService.closeAuthModal();
       return true;
     }
@@ -39,12 +44,17 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('userEmail');
-    this.userEmailSubject.next(null);
+    localStorage.removeItem('user');
+    this.userSubject.next(null);
     this.isLoggedInSubject.next(false);
   }
 
-  getUserEmail(): string | null {
-    return this.userEmailSubject.value;
+  isAdmin(): boolean {
+    const user = this.userSubject.value;
+    return user ? user.isAdmin : false;
+  }
+
+  getCurrentUser(): User | null {
+    return this.userSubject.value;
   }
 }

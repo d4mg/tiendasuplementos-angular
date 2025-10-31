@@ -1,0 +1,153 @@
+<div class="admin-container" *ngIf="isAdmin">
+    <header class="admin-header">
+        <h1>Panel de Administración</h1>
+        <p>Gestiona tus productos aquí</p>
+    </header>
+
+    <!-- Mensajes de error globales -->
+    <div class="error-message" *ngIf="error">
+        {{ error }}
+    </div>
+
+    <!-- Formulario para agregar/editar producto -->
+    <section class="producto-form">
+        <h2>{{ editando ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h2>
+        <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="nombre">Nombre del Producto</label>
+                <input type="text" id="nombre" formControlName="nombre" [class.invalid]="nombreInvalido">
+                <div class="error" *ngIf="nombreInvalido">
+                    <span *ngIf="productoForm.get('nombre')?.errors?.['required']">
+                        El nombre es requerido
+                    </span>
+                    <span *ngIf="productoForm.get('nombre')?.errors?.['minlength']">
+                        El nombre debe tener al menos 3 caracteres
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" formControlName="descripcion" rows="3" [class.invalid]="descripcionInvalida"></textarea>
+                <div class="error" *ngIf="descripcionInvalida">
+                    <span *ngIf="productoForm.get('descripcion')?.errors?.['required']">
+                        La descripción es requerida
+                    </span>
+                    <span *ngIf="productoForm.get('descripcion')?.errors?.['minlength']">
+                        La descripción debe tener al menos 10 caracteres
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="number" id="precio" formControlName="precio" [class.invalid]="precioInvalido">
+                    <div class="error" *ngIf="precioInvalido">
+                        <span *ngIf="productoForm.get('precio')?.errors?.['required']">
+                            El precio es requerido
+                        </span>
+                        <span *ngIf="productoForm.get('precio')?.errors?.['min']">
+                            El precio debe ser mayor a 0
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="number" id="stock" formControlName="stock" [class.invalid]="stockInvalido">
+                    <div class="error" *ngIf="stockInvalido">
+                        <span *ngIf="productoForm.get('stock')?.errors?.['required']">
+                            El stock es requerido
+                        </span>
+                        <span *ngIf="productoForm.get('stock')?.errors?.['min']">
+                            El stock debe ser mayor a 0
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="imagen">URL de la Imagen</label>
+                <input type="text" id="imagen" formControlName="imagen" [class.invalid]="imagenInvalida">
+                <div class="error" *ngIf="imagenInvalida">
+                    <span *ngIf="productoForm.get('imagen')?.errors?.['pattern']">
+                        Si proporcionas una URL, debe comenzar con http:// o https://
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="categoria">Categoría</label>
+                <select id="categoria" formControlName="categoria" [class.invalid]="categoriaInvalida">
+                    <option value="">Selecciona una categoría</option>
+                    <option value="proteinas">Proteínas</option>
+                    <option value="creatinas">Creatinas</option>
+                    <option value="aminoacidos">Aminoácidos</option>
+                    <option value="otros">Otros</option>
+                </select>
+                <div class="error" *ngIf="categoriaInvalida">
+                    La categoría es requerida
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" [disabled]="!productoForm.valid || loading" class="btn-primary">
+                    <span *ngIf="!loading">{{ editando ? 'Actualizar Producto' : 'Agregar Producto' }}</span>
+                    <span *ngIf="loading">Procesando...</span>
+                </button>
+                <button type="button" class="btn-secondary" *ngIf="editando" (click)="resetForm()" [disabled]="loading">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Lista de productos -->
+    <section class="productos-list">
+        <h2>Productos Existentes</h2>
+        <div class="table-responsive" *ngIf="!loading && productos.length > 0">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Categoría</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let producto of productos">
+                        <td>{{ producto.id }}</td>
+                        <td class="imagen-cell">
+                            <img [src]="producto.imagen" [alt]="producto.nombre" class="producto-imagen">
+                        </td>
+                        <td>{{ producto.nombre }}</td>
+                        <td class="descripcion-cell">{{ producto.descripcion }}</td>
+                        <td>{{ producto.precio | currency:'COP':'symbol-narrow':'1.0-0' }}</td>
+                        <td>{{ producto.stock }}</td>
+                        <td>{{ producto.categoria }}</td>
+                        <td class="acciones">
+                            <button class="btn-edit" (click)="editarProducto(producto)" [disabled]="loading">
+                                Editar
+                            </button>
+                            <button class="btn-delete" (click)="eliminarProducto(producto.id)" [disabled]="loading">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="loading" class="loading-message">
+            Cargando productos...
+        </div>
+        <div *ngIf="!loading && productos.length === 0" class="empty-message">
+            No hay productos disponibles
+        </div>
+    </section>
+</div>

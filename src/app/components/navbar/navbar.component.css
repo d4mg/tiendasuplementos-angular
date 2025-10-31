@@ -126,15 +126,34 @@
 }
 
 .btn-login {
-  color: #7a7a7a;
-  border-radius: 5px;
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  color: white;
   border: none;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: medium;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .btn-login:hover {
-  background: #393939;
+  background-color: var(--primary-dark);
+}
+
+.admin-link {
+  background-color: #ff9800;
+  color: white !important;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.admin-link:hover {
+  background-color: #f57c00;
+  text-decoration: none;
+}
+
+.admin-link.active {
+  background-color: #f57c00;
 }
 
 .btn-logout{

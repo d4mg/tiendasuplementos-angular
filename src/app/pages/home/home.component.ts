@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-import { ModalService } from '../../services/modal.service'; // ✅ Importa el nuevo servicio
+import { ModalService } from '../../services/modal.service';
+import { User, AuthData } from '../../models/user.interface';
 
 @Component({
   selector: 'app-home',
@@ -15,8 +16,8 @@ export class HomeComponent implements OnInit {
   showAuthModal = false;
   isRegisterMode = false;
 
-  authData = { email: '', password: '' };
-  currentUser: { email: string; password: string } | null = null;
+  authData: AuthData = { email: '', password: '' };
+  currentUser: User | null = null;
 
   constructor(
     private authService: AuthService,
@@ -27,12 +28,23 @@ export class HomeComponent implements OnInit {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.currentUser = JSON.parse(storedUser);
-      this.authService.restoreSession(this.currentUser?.email || '');
     }
 
     // 🔥 Suscribirse al estado del modal
     this.modalService.authModalVisible$.subscribe((isVisible: boolean) => {
       this.showAuthModal = isVisible;
+    });
+
+    // Suscribirse al estado de autenticación
+    this.authService.user$.subscribe(user => {
+      if (user) {
+        this.currentUser = {
+          email: user.email,
+          password: this.authData.password
+        };
+      } else {
+        this.currentUser = null;
+      }
     });
   }
 
@@ -43,7 +55,7 @@ export class HomeComponent implements OnInit {
 
   // Cerrar modal
   closeAuthModal() {
-    this.modalService.openAuthModal();
+    this.modalService.closeAuthModal();
     this.authData = { email: '', password: '' };
   }
 
@@ -70,21 +82,24 @@ export class HomeComponent implements OnInit {
     }
 
     if (this.isRegisterMode) {
-      localStorage.setItem('user', JSON.stringify(this.authData));
       this.currentUser = { ...this.authData };
-      this.authService.login(this.authData.email);
-      alert('✅ Cuenta registrada con éxito');
+      const success = this.authService.login(this.authData.email, this.authData.password);
+      if (success) {
+        alert('✅ Cuenta registrada con éxito');
+      }
     } else {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
         const user = JSON.parse(storedUser);
-        if (user.email === this.authData.email && user.password === this.authData.password) {
-          this.currentUser = user;
-          this.authService.login(user.email);
-          alert(`👋 Bienvenido de nuevo, ${user.email}`);
+        if (user.email === this.authData.email) {
+          const success = this.authService.login(this.authData.email, this.authData.password);
+          if (success) {
+            alert(`👋 Bienvenido de nuevo, ${user.email}`);
+          } else {
+            alert('❌ Correo o contraseña incorrectos');
+          }
         } else {
           alert('❌ Correo o contraseña incorrectos');
-          return;
         }
       } else {
         alert('⚠️ No existe ninguna cuenta registrada. Regístrate primero.');

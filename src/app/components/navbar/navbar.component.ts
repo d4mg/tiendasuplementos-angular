@@ -14,19 +14,25 @@ import { ModalService } from '../../services/modal.service'; // ✅ Importa el s
 export class NavbarComponent implements OnInit {
   isDropdownOpen = false;
   isLoggedIn = false;
+  isAdmin = false;
   userEmail: string | null = null;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private modalService: ModalService // ✅ Inyectamos el servicio aquí
+    private modalService: ModalService
   ) {}
 
   ngOnInit() {
     // suscripción al estado de autenticación
-    this.authService.isLoggedIn$.subscribe((status) => {
-      this.isLoggedIn = status;
-      this.userEmail = this.authService.getUserEmail();
+    this.authService.user$.subscribe(user => {
+      this.isLoggedIn = !!user;
+      this.userEmail = user?.email || null;
+      this.isAdmin = user?.isAdmin || false;
+    });
+
+    this.authService.user$.subscribe(user => {
+      this.userEmail = user?.email || null;
     });
   }
 

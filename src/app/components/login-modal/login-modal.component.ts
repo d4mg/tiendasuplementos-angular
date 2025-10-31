@@ -44,13 +44,16 @@ export class LoginModalComponent {
 
     if (this.isRegisterMode) {
       // Simulación de registro
-      this.authService.login(email);
-      alert('Cuenta creada correctamente ✅');
-    } else {
-      // Simulación de login
-      const success = this.authService.login(email);
+      const success = this.authService.login(email, password);
       if (success) {
-        this.closeAuthModal(); // ✅ Cierra el modal al iniciar sesión
+        alert('Cuenta creada correctamente ✅');
+        this.closeAuthModal();
+      }
+    } else {
+      // Intento de inicio de sesión
+      const success = this.authService.login(email, password);
+      if (success) {
+        this.closeAuthModal();
       } else {
         alert('Error al iniciar sesión ❌');
       }

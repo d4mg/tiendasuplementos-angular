@@ -4,5 +4,7 @@ export interface Producto {
   descripcion: string;     // Descripción breve
   precio: number;          // Precio
   imagen: string;          // URL de la imagen
-  cantidad?: number;      // Cantidad (opcional)
+  categoria: string;       // Categoría del producto
+  stock: number;          // Cantidad en stock
+  cantidad?: number;      // Cantidad en carrito (opcional)
 }

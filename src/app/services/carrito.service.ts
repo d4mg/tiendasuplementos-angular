@@ -1,21 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-
-export interface Producto {
-  id: number;
-  nombre: string;
-  precio: number;
-  imagen: string;
-  cantidad: number;
-}
+import { Producto } from '../models/producto.interface';
+import { ProductoCarrito } from '../models/producto-carrito.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarritoService {
-  private carrito: Producto[] = [];
-  private carritoSubject = new BehaviorSubject<Producto[]>([]);
-  public carrito$: Observable<Producto[]> = this.carritoSubject.asObservable();
+  private carrito: ProductoCarrito[] = [];
+  private carritoSubject = new BehaviorSubject<ProductoCarrito[]>([]);
+  public carrito$: Observable<ProductoCarrito[]> = this.carritoSubject.asObservable();
 
   constructor() {
     this.cargarCarrito();
@@ -36,7 +30,7 @@ export class CarritoService {
     }
   }
 
-  obtenerCarrito(): Producto[] {
+  obtenerCarrito(): ProductoCarrito[] {
     return [...this.carrito];
   }
 
@@ -46,7 +40,8 @@ export class CarritoService {
     if (productoExistente) {
       productoExistente.cantidad++;
     } else {
-      this.carrito.push({ ...producto, cantidad: 1 });
+      const { descripcion, categoria, stock, ...productoCarrito } = producto;
+      this.carrito.push({ ...productoCarrito, cantidad: 1 });
     }
     
     this.actualizarCarrito();
