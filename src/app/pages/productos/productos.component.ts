@@ -15,10 +15,10 @@ export class ProductosComponent implements AfterViewInit, OnDestroy {
   productosDestacados = [
     { nombre: 'Whey Protein Gold', descripcion: 'Proteína de alta calidad para recuperación muscular.', imagen: 'assets/img/proteina.png' },
     { nombre: 'Creatina Monohidratada', descripcion: 'Aumenta la fuerza y el rendimiento.', imagen: 'assets/img/creatina.png' },
-    { nombre: 'BCAA 2:1:1', descripcion: 'Aminoácidos esenciales para prevenir el catabolismo.', imagen: 'assets/img/aminoacido.png' },
-    { nombre: 'Multivitamínico', descripcion: 'Suplemento completo para tu bienestar diario.', imagen: 'assets/img/multivitaminico.jpg' },
-    { nombre: 'Multivitamínico', descripcion: 'Suplemento completo para tu bienestar diario.', imagen: 'assets/img/multivitaminico.jpg' },
-    { nombre: 'Whey Protein Gold', descripcion: 'Proteína de alta calidad para recuperación muscular.', imagen: 'assets/img/proteina.png' },
+    { nombre: 'BCAA Aminoacidos', descripcion: 'Aminoácidos esenciales para prevenir el catabolismo.', imagen: 'assets/img/aminoacido.png' },
+    { nombre: 'Creatina ON', descripcion: 'Aumenta la fuerza y el rendimiento en cada entrenamiento.', imagen: 'assets/img/creatina2.png' },
+    { nombre: 'Burner Stack', descripcion: 'Burner Stack, bebida energizante que contiene 15mg de extracto de naranja amarga, 100mg de cafeina. Sabor a uva.', imagen: 'assets/img/quemador1.png' },
+    { nombre: 'L-Carnitine Healthy Sports', descripcion: ' la piridoxina (vitamina b6) acompañada de una dieta balanceada, ayuda al metabolismo normal de proteínas y carbohídratos.', imagen: 'assets/img/quemador2.png' },
   ];
 
   private isDown = false;
